@@ -1,0 +1,292 @@
+##
+## Student1: Michael Lepioshkin, ID: 317146553
+## Student2: Ari Bornstein, ID: 329710909
+##
+
+#	Abbreviviation meanings:
+#	S	= a Sentence
+#	PP = Prepositional Phrase
+#	Det = Determiner
+#	Prep = Preposition
+#	Adj = Adjective
+#	Conj = Conjunction (e.g end, or)
+#	Comp = Complementizer
+#	S_BAR = A Sentence that begins with a complementizer
+#	Adv = Adverb
+#	Nnp = Proper noun
+#	Obj = The word 'it' used as a Noun
+#	Nnp = Proper noun
+#
+#	---- Types of nouns ----
+#	NP = Noun Phrase
+#	NP_SINGULAR = singular noun phrase
+#	NP_PLURAL = plural noun phrase
+#
+#	---- Types of verbs ----
+#	VP = Verb Phrase
+#	Verb = Verb
+#	Vi_singular = singular intransitive verb
+#	Vi_plural = plural intransitive verb
+#	VP_SINGULAR_ING = singular verbs that ends with ing
+#	VP_PLURAL_ING = plural verbs that ends with ing
+#	Vi	= Intransitive verb
+#	V5	= Verbs that come before complementizer
+#	V6 = Verbs before NP and complementizer
+#	Ving = Verb with 'ing' suffix
+#	VPComp = VP with complementizer
+#	VerbPP = Verb with prepositional after it
+#
+#	---- Types of verb phase ----
+#	VP_SINGULAR = singular verb phase
+#	VP_PLURAL = plural verb phase
+#	VP_COMP_SINGULAR = singular verb phase with complementizer
+#	VP_COMP_PLURAL = plural verb phase with complementizer
+#
+#	---- Types of verb phase ----
+#	Pronoun = Pronoun
+#	ProNoun_singular = singular pronoun
+#	ProNoun_plural = plural pronoun
+#
+#	---- Question handling rules ----
+#	Q_S = yes/no questions
+#	Q_word = kinds of yes/no questions
+#	Q_pres_singular = present simple singular questions
+#	Q_pres_plural = present simple plural questions
+#	Q_pres_prog_singular = present progressive singular questions
+#	Q_pres_prog_plural = present progressive plural questions
+
+
+#	<------------ Sentence creation rules ------------>
+1	ROOT	S .
+1	ROOT	S !
+1	ROOT	is it true that S ?
+5	ROOT	Q_S ?
+
+#	-------- Sentence types --------
+10	S	NP VP
+10	S	NP Vi
+10	S	NP_SINGULAR VP_SINGULAR
+1	S	NP_PLURAL	Vi_plural
+1	S	NP_SINGULAR Vi_singular
+7	S	NP_PLURAL	VP_PLURAL
+7	S	NP_PLURAL	VP_PLURAL_ING
+7	S	NP_SINGULAR VP_SINGULAR_ING
+1	S	ProNoun_singular VP_COMP
+1	S	ProNoun_plural	VP_COMP_PLURAL
+1	S	ProNoun_singular VP_COMP_SINGULAR
+1	S	ProNoun_plural	VP_COMP
+1	S	NP_SINGULAR VP_COMP_SINGULAR
+1	S	NP_PLURAL	VP_COMP_PLURAL
+1	S	NP VP_COMP
+1	S	Obj VP_RES S_BAR
+1	S	Winter is coming
+
+1	S_BAR	Comp S
+
+#	-------- Verb Phases --------
+1	VP	Verb NP
+
+1	VP_RES	V7	NP
+1	VP_RES	V7_singular NP
+
+1	VP_COMP	V5	S_BAR
+1	VP_COMP_SINGULAR	V5_singular S_BAR
+1	VP_COMP_PLURAL	V5_plural S_BAR
+
+1	VP_COMP	V6	NP S_BAR
+1	VP_COMP_SINGULAR	V6_singular NP S_BAR
+1	VP_COMP_PLURAL	V6_plural NP S_BAR
+
+3	VP_SINGULAR_ING	Be_singular Ving NP
+1	VP_SINGULAR	Be_singular Adj
+1	VP_SINGULAR	Be_singular NP_SINGULAR
+1	VP_SINGULAR	V_singular NP
+
+1	VP_PLURAL_ING	Be_plural Ving NP
+1	VP_PLURAL	Be_plural Adj
+1	VP_PLURAL	Be_plural NP_PLURAL
+1	VP_PLURAL	V_plural NP
+
+1	VP	Verb Conj VP
+10	VP	VerbPP PP
+
+#	-------- Noun Phases --------
+1	NP		NP_SINGULAR
+1	NP		NP_PLURAL
+
+11	NP_PLURAL	Det_plural	Noun_plural # Make shorter sentences more probable
+7	NP_SINGULAR	Nnp # Make shorter sentences more probable
+2	NP_SINGULAR	Det_singular Noun_singular
+2	NP_SINGULAR	NP_SINGULAR PP
+2	NP_PLURAL	NP_PLURAL PP
+1	NP_PLURAL	NP_SINGULAR Conj NP_SINGULAR
+1	NP_PLURAL	NP_PLURAL Conj NP_SINGULAR
+1	NP_PLURAL	NP_PLURAL Conj NP_PLURAL
+1	NP_PLURAL	NP_SINGULAR Conj NP_PLURAL
+
+1	Noun_singular	Adj	Noun_singular
+1	Noun_plural	Adj	Noun_plural
+
+#	-------- Prepositional Phrase --------
+1	PP	Prep	NP_PLURAL
+1	PP	Prep	NP_SINGULAR
+
+#	-------- yes-no questions phrases --------
+1	Q_S	Q_word	ProNoun_singular	VP_COMP_PLURAL
+1	Q_S	Q_word	NP	V_plural	NP
+1	Q_S	Q_word	Obj	V7_plural	NP	S_BAR
+1	Q_S	Q_word	NP	VP_COMP_PLURAL
+1	Q_S	Q_word	ProNoun_plural	VP_COMP_PLURAL
+
+1	Q_S	Q_pres_singular ProNoun_singular VP_COMP_PLURAL
+1	Q_S	Q_pres_singular NP_SINGULAR V_plural NP
+1	Q_S	Q_pres_singular Obj V7_plural NP S_BAR
+1	Q_S	Q_pres_singular NP_SINGULAR VP_COMP_PLURAL
+
+1	Q_S	Q_pres_plural ProNoun_plural	VP_COMP_PLURAL
+1	Q_S	Q_pres_plural NP_PLURAL V_plural NP
+1	Q_S	Q_pres_plural NP_PLURAL VP_COMP_PLURAL
+
+1	Q_S	Q_pres_prog_singular NP_SINGULAR Ving NP
+1	Q_S	Q_pres_prog_plural NP_PLURAL Ving NP
+
+# <------------ Vocabulary ------------>
+
+# ------ Verbs ------
+1	Verb	killed
+1	Verb	wanted
+1	Verb	drank
+1	Verb	poisoned
+1	Verb	stabbed
+1	Verb	kissed
+
+1	VerbPP	worked
+
+2	Ving	coming to
+2	Ving	killing
+
+2	Vi	sighed
+2	Vi	betrayed
+2	Vi	decieved
+
+2	V5	said
+2	V5	thought
+1	V6	told
+1	V7	perplexed
+
+# ------ Singular Verbs ------
+1	V_singular	wants
+1	V_singular	eats
+1	V_singular	drinks
+1	V_singular	stabs
+1	V_singular	decieves
+1	V_singular	understands
+1	V_singular	kisses
+
+# ------ Plural Verbs ------
+1	V_plural	want
+1	V_plural	desire
+1	V_plural	stab
+1	V_plural	betray
+1	V_plural	drink
+1	V_plural	understand
+1	V_plural	kiss
+1	V_plural	choose
+
+1	V_PPsingular	works
+1	V_PPplural		work
+
+# ------ vi, v5, v6 and v7 forms ------
+1	Vi_singular	sighs
+1	Vi_plural	sigh
+
+1	V5_singular	thinks
+1	V5_singular	says
+1	V5_plural	think
+1	V5_plural	say
+
+1	V7_singular	perplexes
+1	V7_plural	perplex
+
+1	V6_singular	tells
+1	V6_plural	tell
+
+# ------ Nouns ------
+1	Noun_singular	king
+1	Noun_singular	winter
+1	Noun_singular	warden of the north
+1	Noun_singular	chicken
+1	Noun_singular	hand of the king
+1	Noun_singular	white walker
+1	Noun_singular	citizen
+1	Noun_singular	wall
+1	Noun_singular	wolf
+1	Noun_singular	iron throne
+
+1	Noun_plural	kings
+1	Noun_plural	chickens
+1	Noun_plural	white walkers
+1	Noun_plural	citizens
+
+# ------ Determiners ------
+1	Det_singular	a
+1	Det_singular	the
+1	Det_singular	every
+1	Det_plural		the
+
+# ------ Proper Noun Singular ------
+1	Nnp	John Snow
+1	Nnp	Cersei
+1	Nnp	Khalesi
+1	Nnp	Arya
+1	Nnp	Jamie
+1	Nnp	Tyrion
+1	Nnp	Kings Landing
+1	Nnp	Littlefinger
+1	Nnp	The Hound
+1	Nnp	Stannis
+
+# ------ Adjectives ------
+2	Adj	blood thirsty
+2	Adj	good looking
+1	Adj	angry
+1	Adj	rich
+1	Adv	very
+2	Adj	Adv	Adj
+
+# ------ Prepositions ------
+3	Prep	on
+1	Prep	with
+1	Prep	in
+1	Prep	under
+1	Prep	for
+1	Prep	over
+
+# ------ Conjunctions ------
+1	Conj	and
+
+# ------ Complementars ------
+1	Comp	that
+
+# ------ Pronouns ------
+1	Obj	it
+1	ProNoun_plural		they
+1	ProNoun_singular		he
+1	ProNoun_singular		she
+
+# ------ Forms of be ------
+1	Be_singular		is
+1	Be_plural		are
+
+# ------ yes-no questions words ------
+1	Q_word	would
+1	Q_word	did
+1	Q_word	can
+1	Q_word	will
+1	Q_word	could
+1	Q_pres_plural	do
+1	Q_pres_singular	does
+1	Q_pres_prog_plural	are
+1	Q_pres_prog_singular	is
+1	Q_past_prog_plural	were
+1	Q_past_prog_singular	was
